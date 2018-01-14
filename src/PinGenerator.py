@@ -1,4 +1,7 @@
-class PinGenerator():
+from random import randint
+
+
+class PinGenerator:
     @staticmethod
     def generate_pin():
-        return 1111
+        return randint(1000, 9999)
