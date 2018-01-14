@@ -3,7 +3,12 @@ from unittest import TestCase
 from src.PinGenerator import PinGenerator
 
 
+
 class TestPinGenerator(TestCase):
+    def setUp(self):
+        # This is the number of attempts necessary to offset the random nature of the pin.
+        self.attempts = 100
+
     def test_generates_pin(self):
         pin = PinGenerator.generate_pin()
         self.assertIs(type(pin), int)
@@ -11,7 +16,7 @@ class TestPinGenerator(TestCase):
     def test_generates_4_digits_pin(self):
         """ "It should be 4 digits long" """
         # Seen the random nature of the pin generator better run 100 iterations.
-        for _ in range(0, 100):
+        for _ in range(0, self.attempts):
             pin = PinGenerator.generate_pin()
             self.assertGreaterEqual(pin, 1000)
             self.assertLessEqual(pin, 9999)
@@ -30,4 +35,8 @@ class TestPinGenerator(TestCase):
         else:
             raise AssertionError("Pin is not random")
 
-
+    def test_pin_does_not_contain_more_than_2_consecutive_numbers(self):
+        """ "It must not contain more than two consecutive numbers (eg 1112, 1111 are not allowed; 1211 is allowed)" """
+        # Seen the random nature of the pin generator better run 100 iterations.
+        for _ in range(0, self.attempts):
+            pin = PinGenerator.generate_pin()
