@@ -3,6 +3,8 @@ from unittest import TestCase
 from src.rules.test_consecutive_digits import test_consecutive_digits
 from src.rules.test_consecutive_sequence import test_consecutive_sequence
 from src.rules.test_distinct_pin import test_distinct_pin
+from src.rules.test_does_not_contain_account_number_or_sort_code import \
+    test_does_not_contain_account_number_or_sort_code
 
 
 class TestRules(TestCase):
@@ -37,3 +39,13 @@ class TestRules(TestCase):
             test_distinct_pin(3455, [1234, 3455, 6535])
         with self.assertRaises(ValueError):
             test_distinct_pin(6535, [1234, 3455, 6535])
+
+    def test_does_not_contain_account_number_or_sort_code(self):
+        """ "It cannot be contained in the user's bank account number or sort code (eg for an account with sort code
+        71-13-13 and account number 13561342, the PINs 1356, 1342 and 7113 are all not allowed)" """
+        with self.assertRaises(ValueError):
+            test_does_not_contain_account_number_or_sort_code(1356, 13561342, (71, 13, 13))
+        with self.assertRaises(ValueError):
+            test_does_not_contain_account_number_or_sort_code(1342, 13561342, (71, 13, 13))
+        with self.assertRaises(ValueError):
+            test_does_not_contain_account_number_or_sort_code(7113, 13561342, (71, 13, 13))
