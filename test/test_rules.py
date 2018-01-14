@@ -5,6 +5,7 @@ from src.rules.test_consecutive_sequence import test_consecutive_sequence
 from src.rules.test_distinct_pin import test_distinct_pin
 from src.rules.test_does_not_contain_account_number_or_sort_code import \
     test_does_not_contain_account_number_or_sort_code
+from src.rules.test_reverse_sequence import test_reverse_sequence
 
 
 class TestRules(TestCase):
@@ -49,3 +50,10 @@ class TestRules(TestCase):
             test_does_not_contain_account_number_or_sort_code(1342, 13561342, (71, 13, 13))
         with self.assertRaises(ValueError):
             test_does_not_contain_account_number_or_sort_code(7113, 13561342, (71, 13, 13))
+
+    def test_complete_reverse_sequence(self):
+        """ The PIN should not contain a reversed continuous sequence (e.g.: 4321, 7654). """
+        with self.assertRaises(ValueError):
+            test_reverse_sequence(4321)
+        with self.assertRaises(ValueError):
+            test_reverse_sequence(7654)

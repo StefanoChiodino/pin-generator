@@ -9,10 +9,9 @@ class PinGenerator:
         while True:
             # TODO: investigate if any stronger randomness is necessary/possible.
             pin = random.SystemRandom().randint(1000, 8999)
-            # noinspection PyBroadException
             try:
                 validate_pin(pin, previous_3_pins, bank_account, sort_code)
-            except:
+            except ValueError:
                 pass
             else:
                 return pin
