@@ -1,7 +1,7 @@
-from random import randint
+import random
 
 
 class PinGenerator:
     @staticmethod
     def generate_pin():
-        return randint(1000, 9999)
+        return random.SystemRandom().randint(1000, 8999)
